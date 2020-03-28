@@ -61,7 +61,10 @@ static void print_sym64(Elf64_Sym *sym_list, size_t sym_count, char *strtab)
 
     for (int i = 1; i < sym_count; i++) {
         Elf64_Sym *sym = sym_list + i;
-        fprintf(stdout, "  %-36s%s\n", "String table index:", strtab + sym->st_name);
+        fprintf(stdout,
+                "  %-36s%s\n",
+                "String table index:",
+                strtab + sym->st_name);
 
         fprintf(stdout, "  %-36s%p\n", "Symbol value:", (void *)sym->st_value);
 
@@ -162,7 +165,7 @@ static int read_shdr(int fd, Elf64_Shdr *shdr_list, Elf64_Ehdr *ehdr)
 
     shdr_size = ehdr->e_shnum * ehdr->e_shentsize;
     buffer_len = shdr_size;
-    buffer = ( char *)malloc(buffer_len);
+    buffer = (char *)malloc(buffer_len);
     lseek(fd, ehdr->e_shoff, SEEK_SET);
 
     if (read(fd, buffer, buffer_len) < 0) {
@@ -588,28 +591,27 @@ int read_sym(int fd, Elf64_Shdr *sym_shdr, Elf64_Sym **ent_list)
         return -1;
     }
 
-    Elf64_Sym * ptr = (Elf64_Sym *)malloc(sizeof(Elf64_Sym) * sym_cnt);
-    memset(ptr,0,sizeof(Elf64_Sym) * sym_cnt );
+    Elf64_Sym *ptr = (Elf64_Sym *)malloc(sizeof(Elf64_Sym) * sym_cnt);
+    memset(ptr, 0, sizeof(Elf64_Sym) * sym_cnt);
 
     *ent_list = ptr;
-
 
     size_t offset = 0;
     for (int i = 1; i < sym_cnt; i++) {
         Elf64_Sym *sym = ptr;
-      ASSIGN_SYM_DEFAULT(st_name, Elf64_Word);
+        ASSIGN_SYM_DEFAULT(st_name, Elf64_Word);
 
-      ASSIGN_SYM_DEFAULT(st_info, unsigned char);
+        ASSIGN_SYM_DEFAULT(st_info, unsigned char);
 
-      ASSIGN_SYM_DEFAULT(st_other, unsigned char);
+        ASSIGN_SYM_DEFAULT(st_other, unsigned char);
 
-      ASSIGN_SYM_DEFAULT(st_shndx, Elf64_Half);
+        ASSIGN_SYM_DEFAULT(st_shndx, Elf64_Half);
 
-      ASSIGN_SYM_DEFAULT(st_value, Elf64_Addr);
+        ASSIGN_SYM_DEFAULT(st_value, Elf64_Addr);
 
-      ASSIGN_SYM_DEFAULT(st_size, Elf64_Addr);
+        ASSIGN_SYM_DEFAULT(st_size, Elf64_Addr);
 
-      ptr++;
+        ptr++;
     }
     return 0;
 }
@@ -654,9 +656,9 @@ int main(int argc, char *argv[])
     if (elf_header.e_shnum > 0) {
         section_headers =
             (Elf64_Shdr *)malloc(sizeof(Elf64_Shdr) * elf_header.e_shnum);
-        if(read_shdr(fd, section_headers, &elf_header)< 0){
-          printf("read shdr failed.\n") ;
-          return -1;
+        if (read_shdr(fd, section_headers, &elf_header) < 0) {
+            printf("read shdr failed.\n");
+            return -1;
         }
 
         Elf64_Shdr *strhdr = section_headers + elf_header.e_shstrndx;
