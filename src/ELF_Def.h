@@ -41,6 +41,8 @@ typedef struct
     Elf32_Half e_shstrndx;
 } Elf32_Ehdr;
 
+/* ELF header */
+
 typedef struct
 {
     unsigned char e_ident[EI_NIDENT]; /* File identification. */
@@ -58,6 +60,38 @@ typedef struct
     Elf64_Half e_shnum;               /* Number of section header entries. */
     Elf64_Half e_shstrndx;            /* Section name strings section. */
 } Elf64_Ehdr;
+
+/* Program header */
+
+typedef struct elf64_phdr
+{
+    Elf64_Word p_type;
+    Elf64_Word p_flags;
+    Elf64_Off p_offset;
+    Elf64_Addr p_vaddr;
+    Elf64_Addr p_paddr;
+    Elf64_Xword p_filesz;
+    Elf64_Xword p_memsz;
+    Elf64_Xword p_align;
+
+} Elf64_Phdr;
+
+/* Section header */
+
+typedef struct elf64_shdr
+{
+    Elf64_Word sh_name;
+    Elf64_Word sh_type;
+    Elf64_Xword sh_flags;
+    Elf64_Addr sh_addr;
+    Elf64_Off sh_offset;
+    Elf64_Xword sh_size;
+    Elf64_Word sh_link;
+    Elf64_Word sh_info;
+    Elf64_Xword sh_addralign;
+    Elf64_Xword sh_entsize;
+
+} Elf64_Shdr;
 
 #define ELF32_HEADER_SIZE 30
 #define ELF64_HEADER_SIZE 38
