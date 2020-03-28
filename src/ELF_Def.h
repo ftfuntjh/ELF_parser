@@ -5,6 +5,7 @@ extern const char* E_ELF_VERSION_MAP[3];
 extern const char* E_MACHINE_MAP[102];
 extern const char* E_CLASS_MAP[4];
 extern const char* E_DATA_MAP[4];
+extern const char* E_SHDR_TYPE_MAP[13];
 
 #define EI_NIDENT 16
 
@@ -23,6 +24,7 @@ typedef int64_t Elf64_Sxword;
 typedef int32_t Elf64_Word;
 typedef int64_t Elf64_Lword;
 typedef uint64_t Elf64_Xword;
+
 typedef struct
 {
     unsigned char e_ident[EI_NIDENT];
@@ -92,6 +94,16 @@ typedef struct elf64_shdr
     Elf64_Xword sh_entsize;
 
 } Elf64_Shdr;
+
+typedef struct elf64_Sym
+{
+    Elf64_Word st_name;
+    unsigned char st_info;
+    unsigned char st_other;
+    Elf64_Half st_shndx;
+    Elf64_Addr st_value;
+    Elf64_Xword st_size;
+} Elf64_Sym;
 
 #define ELF32_HEADER_SIZE 30
 #define ELF64_HEADER_SIZE 38
@@ -184,5 +196,17 @@ typedef struct
 #define SHT_HIPROC 0x7fffffff
 #define SHT_LOUSER 0x80000000
 #define SHT_HIUSER 0xffffffff
+
+#define STB_LOCAL 0x00
+#define STB_GLOBAL 0x01
+#define STB_WEAK 0x02
+#define STB_LOOS 0x0a
+#define STB_HIOS 0x0c
+#define STB_LOPROC 0x0d
+#define STB_HIPROC 0x0f
+
+#define ELF64_ST_BIND(i) ((i) >> 4)
+#define ELF64_ST_TYPE(i) ((i)&0xf)
+#define ELF64_ST_INFO(b, t) (((b) << 4) + ((t)&0xf))
 
 #endif // ELF_DEF_H

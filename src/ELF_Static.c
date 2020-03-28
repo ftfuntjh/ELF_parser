@@ -1,5 +1,21 @@
 #include "ELF_Def.h"
 
+const char *E_SHDR_TYPE_MAP[] = {
+    "Section inactive(NULl)",
+    "Program defined information(PROGBITS)",
+    "Symbol table(SYMTAB)",
+    "String table(STRTAB)",
+    "Relocation entries with addends(RELA)",
+    "Symbol hash table(HASH)",
+    "Dynamic link information(DYNAMIC)",
+    "Note session(NOTE)",
+    "Not assign space(NOBITS)",
+    "Relocation entries without addends(REL)",
+    "Reserved(SHLIB)",
+    "Symbol table(DYNSYM)",
+    "User defined",
+};
+
 const char *E_OBJ_TYPE_MAP[6] = {
     "No file type",
     "Relocatable file(REL)",
